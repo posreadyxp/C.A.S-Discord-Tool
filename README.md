@@ -12,8 +12,8 @@ Install in Termux:
 ```bash
     pkg install python
     pkg install git
-    git clone https://github.com/TheWay-hue/C.A.S-Discord-Tool-v4
-    cd C.A.S-Discord-Tool-v4
+    git clone https://github.com/posreadyxp/C.A.S-Discord-Tool
+    cd C.A.S-Discord-Tool
     pip install -r requirements.txt
     python tool.py
 ```
@@ -21,8 +21,8 @@ Install in Linux:
 ```bash
     apt install python3
     apt install git
-    git clone https://github.com/TheWay-hue/C.A.S-Discord-Tool-v4
-    cd C.A.S-Discord-Tool-v4
+    git clone https://github.com/posreadyxp/C.A.S-Discord-Tool
+    cd C.A.S-Discord-Tool
     pip3 install -r requirements.txt
     sudo python3 tool.py
 ```
