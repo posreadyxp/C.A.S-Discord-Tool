@@ -1,6 +1,3 @@
-# import datetime
-# import requests
-from ast import Delete
 from datetime import datetime
 from requests import get, post, delete, patch
 from json import load
