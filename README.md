@@ -33,7 +33,7 @@ Install in Windows:
     3. Install python on your PC using the installer that you download from the official site.
     4. Write to the cmd console:
         pip install requests
-        cd <path / to / downloaded / files / C.A.S-Discord-Tool-v4>
+        cd <path / to / downloaded / files / C.A.S-Discord-Tool>
         python tool.py
 ```
     [ C.A.S ]
