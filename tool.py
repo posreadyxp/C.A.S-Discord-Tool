@@ -1,7 +1,10 @@
+# import datetime
+# import requests
+from ast import Delete
 from datetime import datetime
 from requests import get, post, delete, patch
 from json import load
-from os import system, name
+from os import rename, system, name
 import time
 
 
@@ -16,14 +19,14 @@ updateStatus = ""
 updateSoft = ""
 currentVersion = ""
 dataProject = get(
-    "https://raw.githubusercontent.com/TheWay-hue/C.A.S-Discord-Tool-v4/master/metadata.json"
+    "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/main/metadata.json"
 )
 version1 = dataProject.json()["Version"]
 with open("metadata.json", "r") as f:
     config = load(f)
     currentVersion = config["Version"]
     if currentVersion < version1:
-        updateStatus = "Update the utility using item 17"
+        updateStatus = "Update the utility using item 18"
         updateSoft = True
     else:
         updateStatus = "The utility does not need updating"
@@ -1904,6 +1907,16 @@ while True:
         elif select == "18":
             print("\nGoodbye!")
             time.sleep(2)
+            if updateSoft:
+                rename("metadata.json", 'metadata_old.json')
+                with get("https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/main/metadata.json") as d:
+                    print(d.content)
+                    with open("metadata.json", 'wb') as f:
+                        f.write(d.content)
+                rename("tool.py", "tool_old.py")
+                with get("https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/main/tool.py") as d:
+                    with open("tool.py", 'wb') as f:
+                        f.write(d.content)
             exit()
         else:
             print("\nInvalid option.")
