@@ -64,8 +64,9 @@ tokenTrackMenu = """
 
 validationMenu = """
 [1] - Сheck 1 token.
-[2] - Check all tokens.
-[3] - Help."""
+[2] - Check bot token
+[3] - Check all tokens.
+[4] - Help."""
 
 leaverMenu = """
 [1] - Leave 1 token.
@@ -105,7 +106,8 @@ ovnMenu = """
 
 infograbMenu = """
 [1] - Grab info.
-[2] - Help."""
+[2] - Grab info from bot
+[3] - Help."""
 
 glitchMenu = """
 [1] - Glitcher
@@ -908,7 +910,7 @@ def scriptGen():
 # Token Validation----------------------------------------------+
 
 
-def validToken(token: str = None, for_nuker: bool = True):
+def validToken(token: str = None, for_nuker: bool = True, for_bot: bool = True):
     sessionName = "Token checker"
     errorLog = open("errorlogs.txt", "a+")
     if for_nuker and token:
@@ -918,6 +920,18 @@ def validToken(token: str = None, for_nuker: bool = True):
         )
         if request.status_code == 403:
             return "Phone locked."
+        elif request.status_code == 401:
+            return "Invalid."
+        else:
+            return "Valid."
+    elif for_bot and token:
+        headers = {"Authorization": "Bot " + token}
+        request = get(
+            "https://discord.com/api/v8/users/@me",
+            headers=headers,
+        )
+        if request.status_code == 403:
+            return "Locked"
         elif request.status_code == 401:
             return "Invalid."
         else:
@@ -949,6 +963,19 @@ def validToken(token: str = None, for_nuker: bool = True):
                     else:
                         print(token + " Valid.")
             elif select == "2":
+                token = str(input("\nBot token: "))
+                headers = {"Authorization": "Bot " + token}
+                request = get(
+                    "https://discord.com/api/v8/users/@me",
+                    headers=headers,
+                )
+                if request.status_code == 403:
+                    print(token + " Locked")
+                elif request.status_code == 401:
+                    print(token + " is Invalid.")
+                else:
+                    print(token + " is Valid.")
+            elif select == "3":
                 validTokens = []
                 with open("tokens.txt", "r") as handle:
                     tokens = handle.readlines()
@@ -970,7 +997,7 @@ def validToken(token: str = None, for_nuker: bool = True):
                 for token in validTokens:
                     tokens.write(f"{token}\n")
                 print("\nAll tokens filtered.")
-            elif select == "3":
+            elif select == "4":
                 print(menu)
                 select = str(input("\nSelect: "))
                 if select == "1":
@@ -1851,6 +1878,27 @@ def grabInfo():
                 )
                 print(f"{token} is {validToken(token, for_nuker=True)}")
         elif select == "2":
+            token = input("\nToken: ")
+            # print(validToken(token, False, True))
+            if validToken(token, False, True) == "Valid.":
+                headers = {"Authorization": "Bot " + token}
+                r = get("https://discord.com/api/v8/users/@me", headers=headers)
+                if r.status_code in statuses:
+                    botId = r.json()['id']
+                    botName = r.json()['username'] + "#" + r.json()["discriminator"]
+                    botAvatar = (
+                        r.json()["avatar"]
+                        if r.json()["avatar"] is not None
+                        else "Default"
+                    )
+                    botBio = r.json()['bio'] if r.json()['bio'] != '' else 'No Bio'
+                    print(f"""
+        Bot Name: {botName}
+        Bot ID: {botId}
+        avatar: {f"https://cdn.discordapp.com/avatars/{botId}/{botAvatar}.png" if not botAvatar == "Default" else botAvatar}
+        bio: {botBio}
+                    """)
+        elif select == "3":
             print(menu)
             select = str(input("\nSelect: "))
             if select == "1":
