@@ -16,7 +16,7 @@ updateStatus = ""
 updateSoft = ""
 currentVersion = ""
 dataProject = get(
-    "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/main/metadata.json"
+    "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/tool/metadata.json"
 )
 version1 = dataProject.json()["Version"]
 with open("metadata.json", "r") as f:
@@ -1957,14 +1957,14 @@ while True:
             if updateSoft:
                 rename("metadata.json", "metadata_old.json")
                 with get(
-                    "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/main/metadata.json"
+                    "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/tool/metadata.json"
                 ) as d:
                     print(d.content)
                     with open("metadata.json", "wb") as f:
                         f.write(d.content)
                 rename("tool.py", "tool_old.py")
                 with get(
-                    "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/main/tool.py"
+                    "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/tool/tool.py"
                 ) as d:
                     with open("tool.py", "wb") as f:
                         f.write(d.content)
