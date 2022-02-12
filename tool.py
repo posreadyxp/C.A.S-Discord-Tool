@@ -1392,7 +1392,7 @@ def cardGrab(cc_digits):
             Country: {country}
             Default Payment Method: {grab['default']}
                         """
-                print(card)
+                    print(card)
             else:
                 errorLog.write(
                     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
