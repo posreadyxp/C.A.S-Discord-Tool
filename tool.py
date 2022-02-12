@@ -8,6 +8,20 @@ import time
 def cls():
     return system("cls") if name == "nt" else system("clear")
 
+def update():
+    rename("metadata.json", "metadata_old.json")
+    with get(
+        "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/tool/metadata.json"
+    ) as d:
+        with open("metadata.json", "wb") as f:
+            f.write(d.content)
+    rename("tool.py", "tool_old.py")
+    with get(
+        "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/tool/tool.py"
+    ) as d:
+        with open("tool.py", "wb") as f:
+            f.write(d.content)
+    exit()
 
 # Check Update----------------------------------------------+
 
@@ -19,15 +33,20 @@ dataProject = get(
     "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/tool/metadata.json"
 )
 version1 = dataProject.json()["Version"]
-with open("metadata.json", "r") as f:
-    config = load(f)
-    currentVersion = config["Version"]
-    if float(currentVersion) < version1:
+# with open("metadata.json", "r") as f:
+config = open("metadata.json", "r")
+config = load(config)
+currentVersion = config["Version"]
+if float(currentVersion) < version1:
+    a = str(input("New update in tool. Do you like update tool now? (yes/no)"))
+    if a == "yes":
+        update()
+    else:
         updateStatus = "Update the utility using item 18"
         updateSoft = True
-    else:
-        updateStatus = "The utility does not need updating"
-        updateSoft = False
+else:
+    updateStatus = "The utility does not need updating"
+    updateSoft = False
 
 # Text, Settings, Info----------------------------------------------+
 
@@ -2003,20 +2022,9 @@ while True:
             print("\nGoodbye!")
             time.sleep(2)
             if updateSoft:
-                rename("metadata.json", "metadata_old.json")
-                with get(
-                    "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/tool/metadata.json"
-                ) as d:
-                    print(d.content)
-                    with open("metadata.json", "wb") as f:
-                        f.write(d.content)
-                rename("tool.py", "tool_old.py")
-                with get(
-                    "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/tool/tool.py"
-                ) as d:
-                    with open("tool.py", "wb") as f:
-                        f.write(d.content)
-            exit()
+                update()
+            else:
+                exit()
         else:
             print("\nInvalid option.")
             nextCode = input("\nPress key to continue.")
