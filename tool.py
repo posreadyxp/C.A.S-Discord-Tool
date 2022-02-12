@@ -11,7 +11,6 @@ def cls():
 
 # Check Update----------------------------------------------+
 
-
 updateStatus = ""
 updateSoft = ""
 currentVersion = ""
