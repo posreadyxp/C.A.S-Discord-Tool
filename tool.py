@@ -38,7 +38,7 @@ config = open("metadata.json", "r")
 config = load(config)
 currentVersion = config["Version"]
 if float(currentVersion) < version1:
-    a = str(input("New update in tool. Do you like update tool now? (yes/no)"))
+    a = str(input("New update in tool. Do you like update tool now? (yes/no): "))
     if a == "yes":
         update()
     else:
