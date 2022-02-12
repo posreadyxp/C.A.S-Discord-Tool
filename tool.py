@@ -1615,7 +1615,7 @@ def tokenAnnihilation(icon, dMdefaultText, statusName):
                 errorLog.write(
                     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
                 )
-            reqStart = get(
+            patch(
                 "https://discord.com/api/v9/users/@me",
                 headers={"Authorization": token},
                 json={"avatar": icon},
