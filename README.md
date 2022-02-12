@@ -1,5 +1,7 @@
 # C.A.S-Discord-Tool
-
+ 
+ This utility updated by me =)
+ 
  This utility has many uses.
  You can manage accounts, servers, webhooks, collect valuable information from accounts, destroy them, crash and raid servers.
  This tool has a wide range of uses and capabilities.
